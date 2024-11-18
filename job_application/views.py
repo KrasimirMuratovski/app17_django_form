@@ -4,6 +4,7 @@ from .models import Form
 from django.contrib import messages
 from django.core.mail import EmailMessage
 
+
 def index(request):
 	if request.method == 'POST':
 		form = Applicationform(request.POST)
@@ -14,12 +15,19 @@ def index(request):
 			date = form.cleaned_data['date']
 			occupation = form.cleaned_data['occupation']
 
-			Form.objects.create(first_name = first_name, last_name = last_name,
-								email = email, date = date, occupation = occupation)
+			Form.objects.create(first_name=first_name, last_name=last_name,
+								email=email, date=date, occupation=occupation)
 			message_body = f"A new job application was submitted successfully. Thank you, \n{first_name}"
-			email_message = EmailMessage("Form submission confirmation", message_body,to = [email])
+			email_message = EmailMessage("Form submission confirmation", message_body, to=[email])
 			email_message.send()
 
 			messages.success(request, 'Your application has been submitted successfully.')
 	return render(request, "index.html")
 
+
+def about(request):
+	return render(request, 'about.html')
+
+
+def contact(request):
+	return render(request, 'contact.html')
